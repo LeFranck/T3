@@ -29,7 +29,7 @@ int main(int argc, int *argv[])
 	Entero* numero = malloc(sizeof(Entero)*2);
 	numero[0].cantidad = 1;
 	numero[0].digitos = malloc(sizeof(char)*2);
-	numero[0].digitos = "8";
+	numero[0].digitos = "2";
 	numero[1].cantidad = 1;
 	numero[1].digitos = malloc(sizeof(char)*2);
 	numero[1].digitos = "4";
