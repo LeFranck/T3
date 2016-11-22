@@ -1,7 +1,6 @@
 #ifndef T3_LIB_INPUT_H
 #define T3_LIB_INPUT_H
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "entero.h"

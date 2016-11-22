@@ -12,6 +12,8 @@ struct entero
 
 typedef struct entero Entero;
 
+void karatsuba(Entero a, Entero b);
+
 void destroy_entero(Entero* e);
 
 #endif
