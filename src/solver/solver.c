@@ -25,15 +25,18 @@ int main(int argc, int *argv[])
 	}
 
 	printf("\n\n\n\n");
-	//Probando karatsuba
+	//Probando Suma
 	Entero* numero = malloc(sizeof(Entero)*2);
-	numero[0].cantidad = 1;
+	numero[0].cantidad = 26;
 	numero[0].digitos = malloc(sizeof(char)*2);
-	numero[0].digitos = "2";
-	numero[1].cantidad = 1;
+	numero[0].digitos = "11111111111111111111111111";
+	numero[1].cantidad = 40;
 	numero[1].digitos = malloc(sizeof(char)*2);
-	numero[1].digitos = "4";
-	karatsuba(numero[0],numero[1]);
+	numero[1].digitos = "9999999999999999999999999999999999999999";
+	Entero* r = suma(numero[0],numero[1]);
+	printf("\n 9999999999999999999999999999999999999999\n");
+	printf("\n 0000000000000011111111111111111111111111\n");
+	printf("\n%s\n",r->digitos);
 
 	destroy_input(input);
 }
