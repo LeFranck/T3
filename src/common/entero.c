@@ -13,19 +13,40 @@ Entero* karatsuba(Entero a, Entero b)
 		char str[3];
 		sprintf(str, "%d", c);
 		int len = strlen(str);
-
 		return init_entero(len,str);
 	}else{
-		int n11 = a.cantidad/2;
-		int n21 = b.cantidad/2;
-		int n12 = n11 + a.cantidad%2;
-		int n22 = n21 + b.cantidad%2;
+		int n_a1 = (a.cantidad)/2;
+		int n_a2 = n_a1 + a.cantidad%2;
+		int n_b1 = (b.cantidad)/2;
+		int n_b2 = n_b1 + b.cantidad%2;
+		//a = a1*10^n_a2 + a2
+		Entero* e = malloc(sizeof(Entero)*7);
+		//a1,a2,b1,b2,c1,c2,c3
+		e[0].cantidad = n_a1;
+		e[1].cantidad = n_a2;
+		e[2].cantidad = n_b1;
+		e[3].cantidad = n_b2;
 
-		Entero* c1 = malloc(sizeof(Entero));
-		Entero* c2 = malloc(sizeof(Entero));
-		Entero* c3 = malloc(sizeof(Entero));
+		e[0].digitos = malloc(sizeof(char)*(n_a1+1));
+		e[1].digitos = malloc(sizeof(char)*(n_a2+1));
+		e[2].digitos = malloc(sizeof(char)*(n_b1+1));
+		e[3].digitos = malloc(sizeof(char)*(n_b2+1));
 
-		return c1;
+		copy_first_n(a.digitos,e[0].digitos,n_a1);
+		copy_last_n(a.digitos,e[1].digitos,n_a2);
+		copy_first_n(b.digitos,e[2].digitos,n_b1);
+		copy_last_n(b.digitos,e[3].digitos,n_b2);
+
+		Entero* c1 = karatsuba(e[0],e[2]);
+		Entero* c2 = karatsuba(e[1],e[3]);
+
+		Entero* s1 = suma(e[0],e[1]);
+		Entero* s2 = suma(e[2],e[3]);
+		//Entero* c3 = karatsuba(s1,s2);
+
+		//La suma final con los respectivos llenados de 0
+
+		return e;
 	}
 }
 
@@ -88,6 +109,27 @@ Entero* sumar_enteros_distinto_largo(Entero a, Entero b)
 	return sumar_enteros_mismo_largo(a, new_b[0]);
 }
 
+void copy_first_n(char* a, char* b, int n )
+{
+	int i = 0;
+	for(i = 0; i < n; i++)
+	{
+		b[i] = a[i];
+	}
+}
+
+void copy_last_n(char* a, char* b, int n )
+{
+	int i = 0;
+	int k = 1;
+	int len = strlen(a);
+	for(i = n-1; i > -1; i--)
+	{
+		b[i] = a[len-k];
+		k = k+1;
+	}
+}
+
 char* add_n_lefts_0(char* s, int n)
 {
 	int len = strlen(s);
@@ -99,7 +141,6 @@ char* add_n_lefts_0(char* s, int n)
 		r[i] = '0';
 	}
 	int k = 0;
-	printf("\n\n");
 	for(i = n; i < r_len + 1 ; i++)
 	{
 		r[i] = s[k];
@@ -108,6 +149,27 @@ char* add_n_lefts_0(char* s, int n)
 	r[r_len] = '\0';
 	return r;
 }
+
+char* add_n_rights_0(char* s, int n)
+{
+	int len = strlen(s);
+	int r_len = len + n;
+	char* r = malloc(sizeof(char)*r_len+1);
+	int i = 0;
+	int k = 0;
+	for(i = 0; i < len ; i++)
+	{
+		r[i] = s[k];
+		k = k + 1;
+	}
+	for(i = len; i < r_len + 1; i++)
+	{
+		r[i] = '0';
+	}
+	r[r_len] = '\0';
+	return r;
+}
+
 
 Entero* init_entero(int len, char* str)
 {

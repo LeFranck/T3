@@ -1,9 +1,11 @@
 #include <stdlib.h>
+#include <string.h>
 #include "../common/input.h"
 #include "../common/entero.h"
 
 int main(int argc, int *argv[])
 {
+	printf("\n\n\n\n");
 	//Manejo del input
 	Input* input = create_input(argv[1]);
 	print_input(input);
@@ -24,7 +26,6 @@ int main(int argc, int *argv[])
 		}
 	}
 
-	printf("\n\n\n\n");
 	//Probando Suma
 	Entero* numero = malloc(sizeof(Entero)*2);
 	numero[0].cantidad = 26;
@@ -34,9 +35,19 @@ int main(int argc, int *argv[])
 	numero[1].digitos = malloc(sizeof(char)*2);
 	numero[1].digitos = "9999999999999999999999999999999999999999";
 	Entero* r = suma(numero[0],numero[1]);
-	printf("\n 9999999999999999999999999999999999999999\n");
-	printf("\n 0000000000000011111111111111111111111111\n");
-	printf("\n%s\n",r->digitos);
+
+	char* kilo = add_n_rights_0(numero[0].digitos,20);
+	printf("%s\n",kilo);
+
+	char* holo = "1234567";
+	char* aaa = malloc(sizeof(char)*5);
+	char* bbb = malloc(sizeof(char)*4);
+	copy_first_n(holo,bbb,3);
+	copy_last_n(holo,aaa,4);
+	aaa[4] = '\0';
+	bbb[3] = '\0';
+	printf("%s \t %s \n",bbb,aaa);
+
 
 	destroy_input(input);
 }

@@ -20,7 +20,14 @@ Entero* sumar_enteros_mismo_largo(Entero a, Entero b);
 
 Entero* sumar_enteros_distinto_largo(Entero a, Entero b);
 
+//izq a derecha
+void copy_first_n(char* a, char* b, int n);
+
+void copy_last_n(char* a, char* b, int n );
+
 char* add_n_lefts_0(char* s, int n );
+
+char* add_n_rights_0(char* s, int n );
 
 Entero* init_entero(int len, char* str);
 
