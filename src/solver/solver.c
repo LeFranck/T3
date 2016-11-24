@@ -26,31 +26,25 @@ int main(int argc, int *argv[])
 		}
 	}
 
-	//Probando Suma
+	//Probando Karatsuba
 	Entero* numero = malloc(sizeof(Entero)*2);
-	numero[0].cantidad = 4;
-	numero[0].digitos = malloc(sizeof(char)*4);
-	numero[0].digitos = "2902";
-	numero[1].cantidad = 3;
-	numero[1].digitos = malloc(sizeof(char)*3);
-	numero[1].digitos = "109";
+	numero[0].cantidad = 2;
+	numero[0].digitos = malloc(sizeof(char)*2);
+	numero[0].digitos = "91";
+	numero[1].cantidad = 2;
+	numero[1].digitos = malloc(sizeof(char)*2);
+	numero[1].digitos = "88";
 	Entero* sss =  suma(numero[0],numero[1]);
+	printf("suma  = |%s|\n",sss->digitos);
 	Entero* uuu = resta(numero[0],numero[1]);
-	printf("|%s|\n",uuu->digitos);
+	printf("resta = |%s|\n",uuu->digitos);
+	//Entero* kara = karatsuba(numero[0],numero[1]);
+	//printf("karat = |%s|\n",kara->digitos);
 
-	char* kilo = add_n_rights_0(numero[0].digitos,20);
-	printf("|%s|\n",kilo);
-
-	//Probando copys
-	char* holo = "1234567";
-	char* aaa = malloc(sizeof(char)*5);
-	char* bbb = malloc(sizeof(char)*4);
-	copy_first_n(holo,bbb,3);
-	copy_last_n(holo,aaa,4);
-	aaa[4] = '\0';
-	bbb[3] = '\0';
-	printf("|%s| \t |%s| \n",bbb,aaa);
-
-
+	free(numero);
+	free(sss->digitos);
+	free(sss);
+	free(uuu->digitos);
+	free(uuu);
 	destroy_input(input);
 }

@@ -2,6 +2,7 @@
 #include <string.h>
 #include "entero.h"
 
+//Cambiar todo a punteros, no por valor
 Entero* karatsuba(Entero a, Entero b)
 {
 	if(a.cantidad == 1 && b.cantidad == 1)
@@ -39,9 +40,16 @@ Entero* karatsuba(Entero a, Entero b)
 		copy_last_n(b.digitos,e[3].digitos,n_b2);
 
 		Entero* c1 = karatsuba(e[0],e[2]);
-		copy_entero(e[4],c1);
+		e[4].cantidad = c1->cantidad;
+		e[4].digitos = malloc(sizeof(char)*(c1->cantidad+1));
+		strcpy(e[4].digitos, c1->digitos);
+		e[4].digitos[c1->cantidad] = '\0';
+
 		Entero* c2 = karatsuba(e[1],e[3]);
-		copy_entero(e[5],c2);
+		e[5].cantidad = c2->cantidad;
+		e[5].digitos = malloc(sizeof(char)*(c2->cantidad+1));
+		strcpy(e[5].digitos, c2->digitos);
+		e[5].digitos[c2->cantidad] = '\0';
 
 		//(a1+a2),(b1+b2),(c1 + c2), (c3 - sumas[2])
 		//(sumas[3]*10^n_a2 + c2)
@@ -50,19 +58,55 @@ Entero* karatsuba(Entero a, Entero b)
 		//Editar suma para q no regrese 0 a la izq
 		Entero* sumas = malloc(sizeof(Entero)*6);
 		Entero* s0 = suma(e[0],e[1]);
+		sumas[0].cantidad = s0->cantidad;
+		sumas[0].digitos = malloc(sizeof(char)*(s0->cantidad+1));
+		strcpy(sumas[0].digitos, s0->digitos);
+		sumas[0].digitos[s0->cantidad] = '\0';
+
 		Entero* s1 = suma(e[2],e[3]);
-		copy_entero(sumas[0],s0);
-		copy_entero(sumas[1],s1);
+		sumas[1].cantidad = s1->cantidad;
+		sumas[1].digitos = malloc(sizeof(char)*(s1->cantidad+1));
+		strcpy(sumas[1].digitos, s1->digitos);
+		sumas[1].digitos[s1->cantidad] = '\0';
 
 		Entero* c3 = karatsuba(sumas[0],sumas[1]);
-		copy_entero(e[6],c3);
+		e[6].cantidad = c3->cantidad;
+		e[6].digitos = malloc(sizeof(char)*(c3->cantidad+1));
+		strcpy(e[6].digitos, c3->digitos);
+		e[6].digitos[c3->cantidad] = '\0';
 
 		Entero* s2 = suma(e[4],e[5]);
-		copy_entero(sumas[2],s2);
+		sumas[2].cantidad = s2->cantidad;
+		sumas[2].digitos = malloc(sizeof(char)*(s2->cantidad+1));
+		strcpy(sumas[2].digitos, s2->digitos);
+		sumas[2].digitos[s2->cantidad] = '\0';
 
-		//La suma final con los respectivos llenados de 0
+		Entero* s3 = resta(e[6],sumas[2]);
+		sumas[3].cantidad = s3->cantidad;
+		sumas[3].digitos = malloc(sizeof(char)*(s3->cantidad+1));
+		strcpy(sumas[3].digitos, s3->digitos);
+		sumas[3].digitos[s3->cantidad] = '\0';
 
-		return s2;
+		//Generare las multiplicacion x 10
+		Entero* por_diez = malloc(sizeof(Entero)*2);
+		por_diez[0].cantidad = sumas[3].cantidad + n_a2;
+		por_diez[0].digitos = malloc(sizeof(char)*por_diez[0].cantidad + 1);
+		char* aux_0 = add_n_rights_0(sumas[3].digitos,n_a2);
+		strcpy(por_diez[0].digitos, aux_0);
+
+		Entero* s4 = suma(por_diez[0],e[5]);
+		sumas[4].cantidad = s4->cantidad;
+		sumas[4].digitos = malloc(sizeof(char)*(s4->cantidad+1));
+		strcpy(sumas[4].digitos, s4->digitos);
+		sumas[4].digitos[s4->cantidad] = '\0';
+		//copy_entero(sumas[4],s4);
+
+		por_diez[1].cantidad = e[4].cantidad + n_a2 + n_a1;
+		por_diez[1].digitos = malloc(sizeof(char)*por_diez[1].cantidad + 1);
+		char* aux_1 = add_n_rights_0(e[4].digitos,n_a2 + n_a1);
+		strcpy(por_diez[1].digitos, aux_1);
+		Entero* s5 = suma(por_diez[1],sumas[4]);
+		return s5;
 	}
 }
 //Se asume que a es mayor a b
@@ -76,9 +120,9 @@ Entero* resta(Entero a, Entero b)
 		new_b[0].cantidad = n;
 		char* digitos = add_n_lefts_0(b.digitos,a.cantidad - b.cantidad);
 		strcpy(new_b[0].digitos,digitos);
+		free(digitos);
 		return resta_igual_largo(a,new_b[0]);
 	}else{
-		printf("resta igual largo\n");
 		return resta_igual_largo(a,b);
 	}
 }
@@ -88,7 +132,6 @@ Entero* resta_igual_largo(Entero a, Entero b)
 {
 	int n = a.cantidad ;
 	Entero* r = init_entero_vacio(a.cantidad);
-	printf("|%s - %s|\n",a.digitos, b.digitos);
 	int i = 0;
 	int carry = 0;
 	for(i = a.cantidad - 1; i > -1 ; i--)
@@ -123,6 +166,7 @@ Entero* resta_igual_largo(Entero a, Entero b)
 		Entero* retorno = init_entero_vacio(r->cantidad - contador);
 		copy_last_n(r->digitos,retorno->digitos,r->cantidad-contador);
 		retorno->digitos[r->cantidad-contador] = '\0';
+		free(r);
 		return retorno;
 	}else{
 		return r;
@@ -177,6 +221,7 @@ Entero* sumar_enteros_mismo_largo(Entero a, Entero b)
 		Entero* sin_l0 = init_entero_vacio(n-1);
 		copy_last_n(r->digitos,sin_l0->digitos,n-1);
 		sin_l0->digitos[n-1] = '\0';
+		//free(r);
 		return sin_l0;
 	}
 }
@@ -190,6 +235,7 @@ Entero* sumar_enteros_distinto_largo(Entero a, Entero b)
 	new_b[0].cantidad = n-1;
 	char* digitos = add_n_lefts_0(b.digitos, a.cantidad - b.cantidad);
 	strcpy(new_b[0].digitos,digitos);
+	free(digitos);
 	return sumar_enteros_mismo_largo(a, new_b[0]);
 }
 
@@ -273,9 +319,11 @@ void set_entero(Entero r, int len, char* str)
 
 void copy_entero(Entero dest, Entero* a)
 {
+	printf("digitos %s\n",a->digitos);
 	dest.cantidad = a->cantidad;
 	dest.digitos = malloc(sizeof(char)*(a->cantidad+1));
 	strcpy(dest.digitos, a->digitos);
+	dest.digitos[a->cantidad] = '\0';
 }
 
 Entero* init_entero_vacio(int len)
