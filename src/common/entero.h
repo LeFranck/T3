@@ -14,6 +14,10 @@ typedef struct entero Entero;
 
 Entero* karatsuba(Entero a, Entero b);
 
+Entero* resta(Entero a, Entero b);
+
+Entero* resta_igual_largo(Entero a, Entero b);
+
 Entero* suma(Entero a, Entero b);
 
 Entero* sumar_enteros_mismo_largo(Entero a, Entero b);
@@ -31,7 +35,13 @@ char* add_n_rights_0(char* s, int n );
 
 Entero* init_entero(int len, char* str);
 
+void set_entero(Entero e, int len, char* str);
+
+void copy_entero(Entero dest, Entero* a);
+
 Entero* init_entero_vacio(int len);
+
+void set_entero_vacio(Entero e, int len);
 
 void destroy_entero(Entero* e);
 

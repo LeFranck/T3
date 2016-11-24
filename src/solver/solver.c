@@ -28,17 +28,20 @@ int main(int argc, int *argv[])
 
 	//Probando Suma
 	Entero* numero = malloc(sizeof(Entero)*2);
-	numero[0].cantidad = 26;
-	numero[0].digitos = malloc(sizeof(char)*2);
-	numero[0].digitos = "11111111111111111111111111";
-	numero[1].cantidad = 40;
-	numero[1].digitos = malloc(sizeof(char)*2);
-	numero[1].digitos = "9999999999999999999999999999999999999999";
-	Entero* r = suma(numero[0],numero[1]);
+	numero[0].cantidad = 4;
+	numero[0].digitos = malloc(sizeof(char)*4);
+	numero[0].digitos = "2902";
+	numero[1].cantidad = 3;
+	numero[1].digitos = malloc(sizeof(char)*3);
+	numero[1].digitos = "109";
+	Entero* sss =  suma(numero[0],numero[1]);
+	Entero* uuu = resta(numero[0],numero[1]);
+	printf("|%s|\n",uuu->digitos);
 
 	char* kilo = add_n_rights_0(numero[0].digitos,20);
-	printf("%s\n",kilo);
+	printf("|%s|\n",kilo);
 
+	//Probando copys
 	char* holo = "1234567";
 	char* aaa = malloc(sizeof(char)*5);
 	char* bbb = malloc(sizeof(char)*4);
@@ -46,7 +49,7 @@ int main(int argc, int *argv[])
 	copy_last_n(holo,aaa,4);
 	aaa[4] = '\0';
 	bbb[3] = '\0';
-	printf("%s \t %s \n",bbb,aaa);
+	printf("|%s| \t |%s| \n",bbb,aaa);
 
 
 	destroy_input(input);
