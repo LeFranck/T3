@@ -28,8 +28,8 @@ int main(int argc, int *argv[])
 
 	//Probando Karatsuba
 	//Entero* numero = malloc(sizeof(Entero)*2);
-	Entero* e1 = init_entero(12,"543218495553");
-	Entero* e2 = init_entero(12,"678905641217");
+	Entero* e1 = init_entero(42,"943218495553123456789009876543211234567890");
+	Entero* e2 = init_entero(42,"678905641217098765432112345678900987654321");
 	printf("e1 = %s | e2 = %s\n",e1->digitos, e2->digitos);
 	Entero* s1 = suma(e1,e2);
 	Entero* s2 = resta(e1,e2);
@@ -37,6 +37,14 @@ int main(int argc, int *argv[])
 	printf("La suma es %s\n", s1->digitos);
 	printf("La resta es %s\n", s2->digitos);
 	printf("La multiplicacion es %s\n", s3->digitos);
+
+	printf("\n\n");
+	Entero* e3 = init_entero(4,"2435");
+	Entero* e4 = init_entero(3,"123");
+	printf("e3 = %s | e4 = %s\n",e3->digitos, e4->digitos);
+	Entero** div = division_entera1(e3,e4);
+	//printf("La division da:  %s = %s * %s + %s\n", e3->digitos, e4->digitos, div[0]->digitos, div[1]->digitos);
+
 
 	//numero[0].cantidad = 2;
 	//numero[0].digitos = malloc(sizeof(char)*2);

@@ -14,6 +14,8 @@ typedef struct entero Entero;
 
 Entero* karatsuba(Entero* a, Entero* b);
 
+Entero** division_entera1(Entero* a, Entero* b);
+
 Entero* resta(Entero* a, Entero* b);
 
 Entero* resta_igual_largo(Entero* a, Entero* b);
@@ -28,6 +30,8 @@ Entero* sumar_enteros_distinto_largo(Entero* a, Entero* b);
 void copy_first_n(char* a, char* b, int n);
 
 void copy_last_n(char* a, char* b, int n );
+
+int es_mayor_que(char* a , char* b, int n);
 
 Entero* eliminate_lefts_0(Entero* e);
 
