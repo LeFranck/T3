@@ -17,6 +17,18 @@ Entero* karatsuba(Entero* a, Entero* b)
 		return init_entero(len,str);
 	}else{
 		//Ver si debo completar con 0's a la izq
+		if(a->cantidad > b->cantidad)
+		{
+			char* addl0 = add_n_lefts_0(b->digitos,a->cantidad - b->cantidad);
+			b = init_entero(a->cantidad, addl0);
+			free(addl0);
+		}else if(a->cantidad < b->cantidad)
+		{
+			char* addl0 = add_n_lefts_0(a->digitos, b->cantidad - a->cantidad);
+			a = init_entero(b->cantidad, addl0);
+			free(addl0);
+		}else{ printf("");}
+
 		int n_a1 = (a->cantidad)/2;
 		int n_a2 = n_a1 + a->cantidad%2;
 		int n_b1 = (b->cantidad)/2;
@@ -29,7 +41,6 @@ Entero* karatsuba(Entero* a, Entero* b)
 		e[2] = init_entero_vacio(n_b1);
 		e[3] = init_entero_vacio(n_b2);
 
-		printf("kartsuba de : '%s' x '%s'\n",a->digitos, b->digitos);
 		copy_first_n(a->digitos,e[0]->digitos,n_a1);
 		e[0]->digitos[n_a1] = '\0';
 		copy_last_n(a->digitos,e[1]->digitos,n_a2);
@@ -40,23 +51,19 @@ Entero* karatsuba(Entero* a, Entero* b)
 		e[3]->digitos[n_b2] = '\0';
 
 		e[4] = karatsuba(e[0],e[2]);
-		printf("c1 = %s \n",e[4]->digitos);
 		e[5] = karatsuba(e[1],e[3]);
-		printf("c2 = %s \n",e[5]->digitos);
 
 		//(a1+a2),(b1+b2),(c1 + c2), (c3 - sumas[2])
 		//(sumas[3]*10^n_a2 + c2)
 		//(sumas[4] + c1*10^(n_a1+n_a2))
 
 		//Editar suma para q no regrese 0 a la izq
-		Entero** sumas = malloc(sizeof(Entero*)*6);
+		Entero** sumas = malloc(sizeof(Entero*)*5);
 		sumas[0] = suma(e[0],e[1]);
 		sumas[1] = suma(e[2],e[3]);
 		e[6] = karatsuba(sumas[0],sumas[1]);
-		printf("c3 = %s \n",e[6]->digitos);
 		sumas[2] = suma(e[4],e[5]);
 		sumas[3] = resta(e[6],sumas[2]);
-		printf("c3 - (c2 + c1) = %s\n",sumas[3]->digitos);
 		//Generare las multiplicacion x 10
 		//Entero* por_diez = malloc(sizeof(Entero)*2);
 
@@ -67,7 +74,7 @@ Entero* karatsuba(Entero* a, Entero* b)
 		char* aux_1 = add_n_rights_0(e[4]->digitos,n_a2 + n_a2);
 		Entero* pd_2 = init_entero(e[4]->cantidad + n_a2 + n_a2 , aux_1);
 
-		sumas[5] = suma(pd_2,sumas[4]);
+		Entero* retorno = suma(pd_2,sumas[4]);
 
 		int k = 0;
 		destroy_entero(pd_1);
@@ -85,8 +92,13 @@ Entero* karatsuba(Entero* a, Entero* b)
 			destroy_entero(sumas[k]);
 		}
 		free(e);
-		//free(sumas);
-		return sumas[5];
+		free(sumas);
+		if(retorno->digitos[0] == '0')
+		{
+			return eliminate_lefts_0(retorno);
+		}else{
+			return retorno;
+		}
 	}
 }
 //Se asume que a es mayor a b
@@ -133,21 +145,7 @@ Entero* resta_igual_largo(Entero* a, Entero* b)
 	r->digitos[n] = '\0';
 	if(r->digitos[0] == '0')
 	{
-		int contador = 0;
-		for(i = 0; i < r->cantidad; i++)
-		{
-			if(r->digitos[i] == '0')
-			{
-				contador = contador + 1;
-			}else{
-				i = r->cantidad;
-			}
-		}
-		Entero* retorno = init_entero_vacio(r->cantidad - contador);
-		copy_last_n(r->digitos,retorno->digitos,r->cantidad-contador);
-		retorno->digitos[r->cantidad-contador] = '\0';
-		destroy_entero(r);
-		return retorno;
+		return eliminate_lefts_0(r);
 	}else{
 		return r;
 	}
@@ -278,6 +276,27 @@ char* add_n_rights_0(char* s, int n)
 	}
 	r[r_len] = '\0';
 	return r;
+}
+
+
+Entero* eliminate_lefts_0(Entero* r)
+{
+	int contador = 0;
+	int i = 0;
+	for(i = 0; i < r->cantidad; i++)
+	{
+		if(r->digitos[i] == '0')
+		{
+			contador = contador + 1;
+		}else{
+			i = r->cantidad;
+		}
+	}
+	Entero* retorno = init_entero_vacio(r->cantidad - contador);
+	copy_last_n(r->digitos,retorno->digitos,r->cantidad-contador);
+	retorno->digitos[r->cantidad-contador] = '\0';
+	destroy_entero(r);
+	return retorno;
 }
 
 Entero* init_entero(int len, char* str)

@@ -29,6 +29,8 @@ void copy_first_n(char* a, char* b, int n);
 
 void copy_last_n(char* a, char* b, int n );
 
+Entero* eliminate_lefts_0(Entero* e);
+
 char* add_n_lefts_0(char* s, int n );
 
 char* add_n_rights_0(char* s, int n );

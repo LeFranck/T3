@@ -28,8 +28,8 @@ int main(int argc, int *argv[])
 
 	//Probando Karatsuba
 	//Entero* numero = malloc(sizeof(Entero)*2);
-	Entero* e1 = init_entero(2,"10");
-	Entero* e2 = init_entero(1,"3");
+	Entero* e1 = init_entero(12,"543218495553");
+	Entero* e2 = init_entero(12,"678905641217");
 	printf("e1 = %s | e2 = %s\n",e1->digitos, e2->digitos);
 	Entero* s1 = suma(e1,e2);
 	Entero* s2 = resta(e1,e2);
