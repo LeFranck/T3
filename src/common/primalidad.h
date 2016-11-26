@@ -5,12 +5,13 @@
 #include <stdlib.h>
 #include "input.h"
 #include "entero.h"
-#include "mcd.h"
 #include "potencia.h"
 
 int compuesto_inmediato(Entero e);
 
-Entero* generate_randoms(Entero* e, int param);
+Entero** generate_randoms(Entero* e, int param);
+
+Entero* generate_random(Entero* e);
 
 int proceso_4(Entero* lista, int len, Entero e);
 

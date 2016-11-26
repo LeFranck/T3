@@ -66,9 +66,12 @@ int main(int argc, int *argv[])
 
 
 	Entero* e5 = init_entero(3,"101");
-	Entero* e6 = init_entero(3,"401");
+	Entero* e6 = init_entero(6,"199401");
 	Entero* max_cd = mcd(e5,e6);
 	printf("mcd(%s,%s) = %s\n",e5->digitos, e6->digitos, max_cd->digitos);
+
+	Entero* e8 = generate_random(e6);
+	printf("random(1..%s) = %s\n",e6->digitos, e8->digitos);
 
 	//destroy_entero(e1);
 	//destroy_entero(e2);
