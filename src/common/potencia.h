@@ -13,4 +13,6 @@ int tiene_raiz_entera(Entero* n, int k, Entero* i, Entero* j);
 
 int es_potencia(Entero* n);
 
+Entero* mcd(Entero* a, Entero* b);
+
 #endif

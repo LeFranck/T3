@@ -87,3 +87,22 @@ int es_potencia(Entero* n)
 		return 0;
 	}
 }
+
+Entero* mcd(Entero* a, Entero* b)
+{
+	if(a_menor_b(a,b)==1)
+	{
+		return mcd(b,a);
+	}else if(iguales(a,b)== 1)
+	{
+		return a;
+	}else{
+		if(b->cantidad == 0)
+		{
+			return a;
+		}else{
+			Entero** mod = division_entera1(a,b);
+			return mcd(b,mod[1]);
+		}
+	}
+}

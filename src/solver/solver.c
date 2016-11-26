@@ -58,12 +58,17 @@ int main(int argc, int *argv[])
 	//printf("%s^%d mod %s = %s\n",e5->digitos, ki, e9->digitos,  exp->digitos);
 
 	int ki = 2;
-	Entero* e5 = init_entero(3,"101");
-	Entero* aux1 = init_entero(1,"1");
-	printf("%s tiene raiz %d\n",e5->digitos,ki);
+	//Entero* e5 = init_entero(3,"101");
+	//Entero* aux1 = init_entero(1,"1");
+	//printf("%s tiene raiz %d\n",e5->digitos,ki);
 	//printf("%d\n",tiene_raiz_entera(e5,ki,aux1,e5));
-	printf("%d\n",es_potencia(e5));
+	//printf("%d\n",es_potencia(e5));
 
+
+	Entero* e5 = init_entero(3,"101");
+	Entero* e6 = init_entero(3,"401");
+	Entero* max_cd = mcd(e5,e6);
+	printf("mcd(%s,%s) = %s\n",e5->digitos, e6->digitos, max_cd->digitos);
 
 	//destroy_entero(e1);
 	//destroy_entero(e2);
