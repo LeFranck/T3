@@ -38,20 +38,17 @@ int n_es_primo(Entero* e, int param)
 	if(compuesto_inmediato(e) == 1){return 0;}
 	if(es_potencia(e)==1)
 	{
-		printf("HITO1\n");
 		return 0;
 	}
 	Entero** randoms = generate_randoms(e,param);
 	int i = 0;
 	for(i = 0; i < param; i++)
 	{
-		printf("%s --> ",randoms[i]->digitos);
 		if(a_menor_b(aux1,mcd(randoms[i],e)) == 1)
 		{
 			return 0;
 		}else{
 			randoms[i] = exponencial_mod_n2(randoms[i],div_n_medio[0],e);
-			printf("%s\n",randoms[i]->digitos);
 		}
 	}
 	int neg = 0;
@@ -59,17 +56,14 @@ int n_es_primo(Entero* e, int param)
 	{
 		if(iguales(randoms[i],n_menos1)==1)
 		{
-			printf("HITO5\n");
 			neg = neg + 1;
 		}else if(iguales(randoms[i],aux1) == 0 )
 		{
-			printf("HITO3\n");
 			return 0;
 		}
 	}
 	if(neg == 0)
 	{
-		printf("HITO4\n");
 		return 0;
 	}else{
 		return 1;

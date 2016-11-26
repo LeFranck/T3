@@ -7,96 +7,30 @@
 
 int main(int argc, int *argv[])
 {
-	printf("\n\n\n\n");
-	//Manejo del input
-	Input* input = create_input(argv[1]);
-	print_input(input);
-
-	//Probando primalidad
-	int i = 0;
-	for(i = 0; i < input->cantidad; i++)
+	if(argc == 3)
 	{
-		printf("%s\t",input->numeros[i].digitos);
-		int retorno = 1;
-		//int retorno = compuesto_inmediato(input->numeros[i]);
-		if(retorno == 0)
+		Entero* e = init_entero(strlen(argv[1]),argv[1]);
+		int k = atoi(argv[2]);
+		int primalidadd = n_es_primo(e,k);
+		if(primalidadd == 1)
 		{
-			printf("es primo\n");
-		}else if(retorno == 1){
-			printf("es compuesto \n");
+			printf("PRIMO, ");
 		}else{
-			printf("no se sabe aun\n");
+			printf("COMPUESTO, ");
 		}
-	}
-
-	//Probando Karatsuba
-	//Entero* numero = malloc(sizeof(Entero)*2);
-	//Entero* e1 = init_entero(42,"943218495553123456789009876543211234567890");
-	//Entero* e2 = init_entero(42,"678905641217098765432112345678900987654321");
-	//printf("e1 = %s | e2 = %s\n",e1->digitos, e2->digitos);
-	//Entero* s1 = suma(e1,e2);
-	//Entero* s2 = resta(e1,e2);
-	//Entero* s3 = karatsuba(e1,e2);
-	//printf("La suma es %s\n", s1->digitos);
-	//printf("La resta es %s\n", s2->digitos);
-	//printf("La multiplicacion es %s\n", s3->digitos);
-
-	//printf("\n\n");
-	//Entero* e3 = init_entero(4,"2435");
-	//Entero* e4 = init_entero(3,"123");
-	//printf("e3 = %s | e4 = %s\n",e3->digitos, e4->digitos);
-	//printf("\n\n");
-	//Entero** div = division_entera1(e3,e4);
-	//printf("La division da:  %s = %s * %s + %s\n", e3->digitos, e4->digitos, div[0]->digitos, div[1]->digitos);
-	//Entero** div2 = division_entera1(s3,e2);
-	//printf("La division da:  %s = %s * %s + %s\n", s3->digitos, e2->digitos, div2[0]->digitos, div2[1]->digitos);
-
-	//probando exponencial
-	//printf("\n\n");
-	//int ki = 3;
-	//Entero* e5 = init_entero(3,"122");
-	//Entero* e9 = init_entero(2,"91");
-	//Entero* exp = exponencial_mod_n(e5,ki,e9);
-	//printf("%s^%d mod %s = %s\n",e5->digitos, ki, e9->digitos,  exp->digitos);
-
-	int ki = 2;
-	//Entero* e5 = init_entero(3,"101");
-	//Entero* aux1 = init_entero(1,"1");
-	//printf("%s tiene raiz %d\n",e5->digitos,ki);
-	//printf("%d\n",tiene_raiz_entera(e5,ki,aux1,e5));
-	//printf("%d\n",es_potencia(e5));
-
-
-	Entero* e5 = init_entero(6,"829921");
-	Entero* e6 = init_entero(6,"199401");
-	Entero* max_cd = mcd(e5,e6);
-	printf("mcd(%s,%s) = %s\n",e5->digitos, e6->digitos, max_cd->digitos);
-
-	printf("\n\n\nCHAPA LA PACHALA\n");
-	int primalidadd = n_es_primo(e5,30);
-	printf("%s es ",e5->digitos);
-	if(primalidadd == 0)
-	{
-		printf("Compuesto\n");
 	}else{
-		printf("Primo\n");
+		Input* input = create_input(argv[1]);
+		int i = 0;
+		for(i = 0; i < input->cantidad; i++)
+		{
+			int primalidadd = n_es_primo(input->numeros[i],input->parametros[i]);
+			if(primalidadd == 0)
+			{
+				printf("COMPUESTO, ");
+			}else{
+				printf("PRIMO, ");
+			}
+		}
+		destroy_input(input);
 	}
-	//Entero* e8 = generate_random(e6);
-	//Entero** e9 = generate_randoms(e6,20);
-	//printf("random(1..%s) = %s\n",e6->digitos, e8->digitos);
-
-	//destroy_entero(e1);
-	//destroy_entero(e2);
-	//destroy_entero(e3);
-	//destroy_entero(e4);
-	//destroy_entero(s1);
-	//destroy_entero(s2);
-	//destroy_entero(s3);
-	//destroy_entero(div[0]);
-	//destroy_entero(div[1]);
-	//destroy_entero(div2[0]);
-	//destroy_entero(div2[0]);
-	//free(div);
-	//free(div2);
-	destroy_input(input);
 }

@@ -9,7 +9,7 @@ struct input
 {
 	int cantidad;
 	int* parametros;
-	Entero* numeros;
+	Entero** numeros;
 };
 
 typedef struct input Input;

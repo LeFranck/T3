@@ -13,7 +13,7 @@ void fill_input(Input* i, char* filename)
 {
 	FILE* fr = fopen(filename,"r");
 	int j = 0;
-	char Numero[256];
+	char Numero[1024];
 	char Basura[10];
 	int param;
 	for(j = 0; j < i->cantidad; j++)
@@ -21,10 +21,7 @@ void fill_input(Input* i, char* filename)
 		fscanf(fr,"%s %d %s",Numero,&param,Basura);
 		i->parametros[j] = param;
 		int k = strlen(Numero);
-		i->numeros[j].digitos = malloc(sizeof(char)*(k));
-		strncpy(i->numeros[j].digitos,Numero,k-1);
-		i->numeros[j].digitos[k-1] = '\0';
-		i->numeros[j].cantidad = k-1;
+		i->numeros[j] = init_entero(k,Numero);
 	}
 	fclose(fr);
 }
@@ -50,7 +47,7 @@ void set_cantidad_de_pares(Input* i, char* filename)
 	fclose(fr);
 	i->cantidad = (k + 1)/2;
 	i->parametros = malloc(sizeof(int)*i->cantidad);
-	i->numeros = malloc(sizeof(Entero)*i->cantidad);
+	i->numeros = malloc(sizeof(Entero*)*i->cantidad);
 }
 
 void print_input(Input* i)
@@ -59,7 +56,7 @@ void print_input(Input* i)
 	int j = 0;
 	for(j = 0; j < i->cantidad; j++)
 	{
-		printf("%d)\t%s\t%d\t%d\n",j,i->numeros[j].digitos,i->numeros[j].cantidad,i->parametros[j]);
+		printf("%d)\t%s\t%d\t%d\n",j,i->numeros[j]->digitos,i->numeros[j]->cantidad,i->parametros[j]);
 	}
 }
 
@@ -69,7 +66,7 @@ void destroy_input(Input* i)
 	int j = 0;
 	for(j = 0; j < i->cantidad; j++)
 	{
-		free(i->numeros[j].digitos);
+		destroy_entero(i->numeros[j]);
 	}
 	free(i->numeros);
 	free(i);

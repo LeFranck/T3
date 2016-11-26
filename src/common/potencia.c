@@ -106,7 +106,6 @@ int es_potencia(Entero* n)
 		int k = 0;
 		double log2_10 = 3.3;
 		int log2_n = log2_10*(n->cantidad + 1);
-		printf("log %d\n",log2_n);
 		for(k = 2; k < log2_n; k++)
 		{
 			if(tiene_raiz_entera(n,k,aux1,n)==1)
