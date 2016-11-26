@@ -7,14 +7,16 @@
 #include "entero.h"
 #include "potencia.h"
 
-int compuesto_inmediato(Entero e);
-
-Entero** generate_randoms(Entero* e, int param);
-
-Entero* generate_random(Entero* e);
+int compuesto_inmediato(Entero* e);
 
 int proceso_4(Entero* lista, int len, Entero e);
 
 int final(Entero* lista, int len, Entero e);
+
+int n_es_primo(Entero* e, int param);
+
+Entero** generate_randoms(Entero* e, int param);
+
+Entero* generate_random(Entero* e);
 
 #endif

@@ -33,6 +33,36 @@ Entero* exponencial_mod_n(Entero* e, int k, Entero* n)
 	}
 }
 
+Entero* exponencial_mod_n2(Entero* e, Entero* k, Entero* n)
+{
+	Entero* aux1 = init_entero(1,"1");
+	Entero* aux2 = init_entero(1,"2");
+	Entero* k_menos1 = resta(k,aux1);
+	int paridad = 0;
+	char last = k->digitos[k->cantidad-1];
+	if(last == '0' || last == '2' || last == '4' || last == '6' || last == '8')
+	{
+		paridad = 1;
+	}
+	if(iguales(aux1,k)==1)
+	{
+		Entero** aux = division_entera1(e,n);
+		return aux[1];
+	}else if(paridad == 1)
+	{
+		Entero** auxaux = division_entera1(k,aux2);
+		Entero* val = exponencial_mod_n2(e,auxaux[0],n);
+		Entero** aux = division_entera1(karatsuba(val,val),n);
+		return aux[1];
+	}else{
+		Entero** auxaux = division_entera1(k_menos1,aux2);
+		Entero* val = exponencial_mod_n2(e,auxaux[0],n);
+		Entero** aux = division_entera1(karatsuba(karatsuba(val,val),e),n);
+		return aux[1];
+	}
+}
+
+
 int tiene_raiz_entera(Entero* n, int k, Entero* i, Entero* j)
 {
 	if(iguales(i,j) == 1)

@@ -5,11 +5,11 @@
 #include <stdlib.h>
 
 //0->es primo, 1 es compuesto, 2 no se sabe
-int compuesto_inmediato(Entero e)
+int compuesto_inmediato(Entero* e)
 {
-	char last = e.digitos[e.cantidad-1];
+	char last = e->digitos[e->cantidad-1];
 	int r = 2;
-	if(e.cantidad == 1)
+	if(e->cantidad == 1)
 	{
 		if(last == '2' || last == '5')
 		{
@@ -25,6 +25,57 @@ int compuesto_inmediato(Entero e)
 	}
 	return r;
 }
+
+int n_es_primo(Entero* e, int param)
+{
+	Entero* aux1 = init_entero(1,"1");
+	Entero* aux2 = init_entero(1,"2");
+	Entero* aux5 = init_entero(1,"5");
+	Entero* n_menos1 = resta(e,aux1);
+	Entero** div_n_medio = division_entera1(n_menos1,aux2);
+	if(iguales(e,aux2) == 1){return 1;}
+	if(iguales(e,aux5) == 1){return 1;}
+	if(compuesto_inmediato(e) == 1){return 0;}
+	if(es_potencia(e)==1)
+	{
+		printf("HITO1\n");
+		return 0;
+	}
+	Entero** randoms = generate_randoms(e,param);
+	int i = 0;
+	for(i = 0; i < param; i++)
+	{
+		printf("%s --> ",randoms[i]->digitos);
+		if(a_menor_b(aux1,mcd(randoms[i],e)) == 1)
+		{
+			return 0;
+		}else{
+			randoms[i] = exponencial_mod_n2(randoms[i],div_n_medio[0],e);
+			printf("%s\n",randoms[i]->digitos);
+		}
+	}
+	int neg = 0;
+	for(i = 0; i < param; i++)
+	{
+		if(iguales(randoms[i],n_menos1)==1)
+		{
+			printf("HITO5\n");
+			neg = neg + 1;
+		}else if(iguales(randoms[i],aux1) == 0 )
+		{
+			printf("HITO3\n");
+			return 0;
+		}
+	}
+	if(neg == 0)
+	{
+		printf("HITO4\n");
+		return 0;
+	}else{
+		return 1;
+	}
+}
+
 
 Entero** generate_randoms(Entero* e, int param)
 {
@@ -42,7 +93,6 @@ Entero* generate_random(Entero* e)
 	int i = 0;
 	int libre = 0;
 	int no_es0 = 0;
-	srand(time(NULL));
 	char* aux = malloc(sizeof(char)*(e->cantidad + 1));
 	while(no_es0 == 0)
 	{

@@ -3,6 +3,7 @@
 #include "../common/input.h"
 #include "../common/entero.h"
 #include "../common/potencia.h"
+#include "../common/primalidad.h"
 
 int main(int argc, int *argv[])
 {
@@ -16,7 +17,8 @@ int main(int argc, int *argv[])
 	for(i = 0; i < input->cantidad; i++)
 	{
 		printf("%s\t",input->numeros[i].digitos);
-		int retorno = compuesto_inmediato(input->numeros[i]);
+		int retorno = 1;
+		//int retorno = compuesto_inmediato(input->numeros[i]);
 		if(retorno == 0)
 		{
 			printf("es primo\n");
@@ -65,13 +67,23 @@ int main(int argc, int *argv[])
 	//printf("%d\n",es_potencia(e5));
 
 
-	Entero* e5 = init_entero(3,"101");
+	Entero* e5 = init_entero(6,"829921");
 	Entero* e6 = init_entero(6,"199401");
 	Entero* max_cd = mcd(e5,e6);
 	printf("mcd(%s,%s) = %s\n",e5->digitos, e6->digitos, max_cd->digitos);
 
-	Entero* e8 = generate_random(e6);
-	printf("random(1..%s) = %s\n",e6->digitos, e8->digitos);
+	printf("\n\n\nCHAPA LA PACHALA\n");
+	int primalidadd = n_es_primo(e5,30);
+	printf("%s es ",e5->digitos);
+	if(primalidadd == 0)
+	{
+		printf("Compuesto\n");
+	}else{
+		printf("Primo\n");
+	}
+	//Entero* e8 = generate_random(e6);
+	//Entero** e9 = generate_randoms(e6,20);
+	//printf("random(1..%s) = %s\n",e6->digitos, e8->digitos);
 
 	//destroy_entero(e1);
 	//destroy_entero(e2);
