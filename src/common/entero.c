@@ -105,19 +105,17 @@ Entero* karatsuba(Entero* a, Entero* b)
 //asume que a > b
 Entero** division_entera1(Entero* a, Entero* b)
 {
-	int a_can = a->cantidad;
-	int b_can = b->cantidad;
 	int contador_restas = 0;
 	int r_fase = 0;
-	char* resultado = malloc(sizeof(char)*(a_can - b_can + 2));
-	char* resto = malloc(sizeof(char)*b_can+1);
-	int can_0 = a_can-b_can;
+	char* resultado = malloc(sizeof(char)*(a->cantidad - b->cantidad + 2));
+	char* resto = malloc(sizeof(char)*b->cantidad+1);
+	int can_0 = a->cantidad-b->cantidad;
 	Entero* e = init_entero(a->cantidad,a->digitos);
 	char* b_pd = add_n_rights_0(b->digitos,can_0);
-	Entero* restando = init_entero(b_can+can_0,b_pd);
+	Entero* restando = init_entero(b->cantidad+can_0,b_pd);
 
 	int k = 0;
-	for(k = 0; k < a_can - b_can + 1; k++)
+	for(k = 0; k < a->cantidad - b->cantidad + 1; k++)
 	{
 		int parar = 0;
 		while(parar == 0)
@@ -128,7 +126,7 @@ Entero** division_entera1(Entero* a, Entero* b)
 				r_fase = r_fase + 1;
 			}else if(e->cantidad == restando->cantidad)
 			{
-				if(es_mayor_que(e->digitos,b->digitos,b_can) != -1 )
+				if(es_mayor_que(e->digitos,b->digitos,b->cantidad) != -1 )
 				{
 					e = resta(e,restando);
 					r_fase = r_fase + 1;
@@ -144,12 +142,17 @@ Entero** division_entera1(Entero* a, Entero* b)
 		contador_restas = contador_restas + 1;
 		can_0 = can_0 - 1;
 		b_pd = add_n_rights_0(b->digitos,can_0);
-		restando = init_entero(b_can+can_0,b_pd);
+		restando = init_entero(b->cantidad+can_0,b_pd);
 	}
-	resultado[a_can-b_can +1] = '\0';
+	resultado[a->cantidad-b->cantidad +1] = '\0';
 	Entero** retorno = malloc(sizeof(Entero*)*2);
-	retorno[0] = eliminate_lefts_0(init_entero(a_can-b_can + 1, resultado));
+	retorno[0] = eliminate_lefts_0(init_entero(a->cantidad-b->cantidad + 1, resultado));
 	retorno[1] = init_entero(e->cantidad,e->digitos);
+	destroy_entero(restando);
+	destroy_entero(e);
+	free(resultado);
+	free(resto);
+	free(b_pd);
 	return retorno;
 }
 
@@ -304,7 +307,6 @@ int es_mayor_que(char* a, char* b, int n)
 	}
 	return 0;
 }
-
 
 char* add_n_lefts_0(char* s, int n)
 {

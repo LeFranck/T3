@@ -7,7 +7,6 @@
 #include "entero.h"
 #include "mcd.h"
 #include "potencia.h"
-#include "modulo.h"
 
 int compuesto_inmediato(Entero e);
 
