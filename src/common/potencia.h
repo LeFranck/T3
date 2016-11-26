@@ -11,4 +11,6 @@ Entero* exponencial_mod_n(Entero* e, int k, Entero* n);
 
 int tiene_raiz_entera(Entero* n, int k, Entero* i, Entero* j);
 
+int es_potencia(Entero* n);
+
 #endif

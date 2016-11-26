@@ -64,3 +64,26 @@ int tiene_raiz_entera(Entero* n, int k, Entero* i, Entero* j)
 		return 0;
 	}
 }
+
+int es_potencia(Entero* n)
+{
+	Entero* aux3 = init_entero(1,"3");
+	Entero* aux1 = init_entero(1,"1");
+	if(iguales(n,aux3) == 1 || a_menor_b(n,aux3) == 1)
+	{
+		return 0;
+	}else{
+		int k = 0;
+		double log2_10 = 3.3;
+		int log2_n = log2_10*(n->cantidad + 1);
+		printf("log %d\n",log2_n);
+		for(k = 2; k < log2_n; k++)
+		{
+			if(tiene_raiz_entera(n,k,aux1,n)==1)
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
+}

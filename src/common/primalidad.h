@@ -10,8 +10,6 @@
 
 int compuesto_inmediato(Entero e);
 
-int es_potencia(Entero e);
-
 Entero* generate_randoms(Entero* e, int param);
 
 int proceso_4(Entero* lista, int len, Entero e);
