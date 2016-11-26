@@ -43,6 +43,10 @@ Entero* init_entero(int len, char* str);
 
 Entero* init_entero_vacio(int len);
 
+int iguales(Entero* a, Entero* b);
+
+int a_menor_b(Entero* a, Entero* b);
+
 void set_entero(Entero e, int len, char* str);
 
 void copy_entero(Entero dest, Entero a);

@@ -32,3 +32,35 @@ Entero* exponencial_mod_n(Entero* e, int k, Entero* n)
 		return aux[1];
 	}
 }
+
+int tiene_raiz_entera(Entero* n, int k, Entero* i, Entero* j)
+{
+	if(iguales(i,j) == 1)
+	{
+		Entero* exp = exponencial(i,k);
+		if(iguales(exp,n) == 1)
+		{
+			return 1;
+		}else{
+			return 0;
+		}
+	}else if(a_menor_b(i,j) == 1)
+	{
+		Entero* aux2 = init_entero(1,"2");
+		Entero** s = division_entera1(suma(i,j),aux2);
+		Entero* val = exponencial(s[0],k);
+		if(iguales(val,n) == 1)
+		{
+			return 1;
+		}else if(a_menor_b(val,n) == 1)
+		{
+			Entero* aux = init_entero(1,"1");
+			return tiene_raiz_entera(n,k,suma(aux,s[0]),j);
+		}else{
+			Entero* aux = init_entero(1,"1");
+			return tiene_raiz_entera(n,k,i,resta(s[0],aux));
+		}
+	}else{
+		return 0;
+	}
+}

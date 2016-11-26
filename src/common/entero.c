@@ -386,6 +386,40 @@ Entero* init_entero_vacio(int len)
 	return r;
 }
 
+int iguales(Entero* a, Entero* b)
+{
+	if(a->cantidad == b->cantidad)
+	{
+		if(es_mayor_que(a->digitos,b->digitos,a->cantidad) == 0)
+		{
+			return 1;
+		}else{
+			return 0;
+		}
+	}else{
+		return 0;
+	}
+}
+
+int a_menor_b(Entero* a, Entero* b)
+{
+	if(a->cantidad < b->cantidad)
+	{
+		return 1;
+	}else if(a->cantidad == b->cantidad)
+	{
+		if(es_mayor_que(a->digitos,b->digitos,a->cantidad) == -1)
+		{
+			return 1;
+		}else{
+			return 0;
+		}
+	}else{
+		return 0;
+	}
+}
+
+
 void destroy_entero(Entero* e)
 {
 	free(e->digitos);

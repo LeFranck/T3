@@ -50,12 +50,19 @@ int main(int argc, int *argv[])
 	//printf("La division da:  %s = %s * %s + %s\n", s3->digitos, e2->digitos, div2[0]->digitos, div2[1]->digitos);
 
 	//probando exponencial
-	printf("\n\n");
-	int ki = 3;
-	Entero* e5 = init_entero(3,"122");
-	Entero* e9 = init_entero(2,"91");
-	Entero* exp = exponencial_mod_n(e5,ki,e9);
-	printf("%s^%d mod %s = %s\n",e5->digitos, ki, e9->digitos,  exp->digitos);
+	//printf("\n\n");
+	//int ki = 3;
+	//Entero* e5 = init_entero(3,"122");
+	//Entero* e9 = init_entero(2,"91");
+	//Entero* exp = exponencial_mod_n(e5,ki,e9);
+	//printf("%s^%d mod %s = %s\n",e5->digitos, ki, e9->digitos,  exp->digitos);
+
+	int ki = 2;
+	Entero* e5 = init_entero(3,"125");
+	Entero* aux1 = init_entero(1,"1");
+	printf("%s tiene raiz %d\n",e5->digitos,ki);
+	printf("%d\n",tiene_raiz_entera(e5,ki,aux1,e5));
+
 
 	//destroy_entero(e1);
 	//destroy_entero(e2);
