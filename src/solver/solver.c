@@ -42,8 +42,11 @@ int main(int argc, int *argv[])
 	Entero* e3 = init_entero(4,"2435");
 	Entero* e4 = init_entero(3,"123");
 	printf("e3 = %s | e4 = %s\n",e3->digitos, e4->digitos);
+	printf("\n\n");
 	Entero** div = division_entera1(e3,e4);
-	//printf("La division da:  %s = %s * %s + %s\n", e3->digitos, e4->digitos, div[0]->digitos, div[1]->digitos);
+	printf("La division da:  %s = %s * %s + %s\n", e3->digitos, e4->digitos, div[0]->digitos, div[1]->digitos);
+	Entero** div2 = division_entera1(s3,e2);
+	printf("La division da:  %s = %s * %s + %s\n", s3->digitos, e2->digitos, div2[0]->digitos, div2[1]->digitos);
 
 
 	//numero[0].cantidad = 2;

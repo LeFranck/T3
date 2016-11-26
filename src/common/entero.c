@@ -107,75 +107,49 @@ Entero** division_entera1(Entero* a, Entero* b)
 {
 	int a_can = a->cantidad;
 	int b_can = b->cantidad;
-	int puedo_restar = 0;
 	int contador_restas = 0;
 	int r_fase = 0;
-	char** resultado_array = malloc(sizeof(char*)*(a_can-b_can +2));
-	printf("r array tiene %d\n",a_can-b_can+1 );
-	//char* resultado = malloc(sizeof(char)*(a_can - b_can + 2));
+	char* resultado = malloc(sizeof(char)*(a_can - b_can + 2));
 	char* resto = malloc(sizeof(char)*b_can+1);
 	int can_0 = a_can-b_can;
-	//e sera el entero que va a sufrir las operaciones
 	Entero* e = init_entero(a->cantidad,a->digitos);
 	char* b_pd = add_n_rights_0(b->digitos,can_0);
 	Entero* restando = init_entero(b_can+can_0,b_pd);
 
-	while(puedo_restar == 0)
+	int k = 0;
+	for(k = 0; k < a_can - b_can + 1; k++)
 	{
-		if(e->cantidad >= restando->cantidad && es_mayor_que(e->digitos,b->digitos,b_can) != -1)
+		int parar = 0;
+		while(parar == 0)
 		{
-			e = resta(e,restando);
-			r_fase = r_fase + 1;
-			printf("e: %s\n",e->digitos);
-		}else{
-			char* aux = malloc(sizeof(char)*2);
-			aux[0] = r_fase + '0';
-			aux[1] = '\0';
-			resultado_array[contador_restas] = add_n_rights_0(aux,can_0);
-			can_0 = can_0 - 1;
-			contador_restas = contador_restas + 1;
-			r_fase = 0;
-			b_pd = add_n_rights_0(b->digitos,can_0);
-			restando = init_entero(b_can+can_0,b_pd);
-
-			if(e->cantidad == 0)
+			if(e->cantidad > restando->cantidad)
 			{
-				strcpy(resto,"0");
-				puedo_restar = 1;
-			}
-
-			if(can_0 < 0)
+				e = resta(e,restando);
+				r_fase = r_fase + 1;
+			}else if(e->cantidad == restando->cantidad)
 			{
-				strcpy(resto,e->digitos);
-				puedo_restar = 1;
+				if(es_mayor_que(e->digitos,b->digitos,b_can) != -1 )
+				{
+					e = resta(e,restando);
+					r_fase = r_fase + 1;
+				}else{
+					parar = 1;
+				}
+			}else{
+				parar = 1;
 			}
 		}
-
+		resultado[contador_restas] = r_fase + '0';
+		r_fase = 0;
+		contador_restas = contador_restas + 1;
+		can_0 = can_0 - 1;
+		b_pd = add_n_rights_0(b->digitos,can_0);
+		restando = init_entero(b_can+can_0,b_pd);
 	}
-
+	resultado[a_can-b_can +1] = '\0';
 	Entero** retorno = malloc(sizeof(Entero*)*2);
-	int i = 0;
-	retorno[0] = init_entero_vacio(strlen(resultado_array[0]));
-	for(i = 0; i < retorno[0]->cantidad; i++)
-	{
-		retorno[0]->digitos[i] = '0';
-	}
-	retorno[0]->digitos[retorno[0]->cantidad] = '\0';
-	for(i = 0; i < a_can - b_can +1  ; i++)
-	{
-		printf("HITO %d\n",i);
-		if(resultado_array[i]!=NULL)
-		{
-			if(resultado_array[i][0] != '0')
-			{
-				Entero* auxaux = init_entero(strlen(resultado_array[i]),resultado_array[i]);
-				retorno[0] = suma(auxaux, retorno[0]);
-			}
-		}
-	}
-
-	printf("%s\n",resto);
-	retorno[1] = init_entero(strlen(resto),resto);
+	retorno[0] = eliminate_lefts_0(init_entero(a_can-b_can + 1, resultado));
+	retorno[1] = init_entero(e->cantidad,e->digitos);
 	return retorno;
 }
 
