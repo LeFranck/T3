@@ -3,7 +3,8 @@ Identificador de numeros primos
 
 Way of run it:
 
-./solver k n
+./solver K N
 
-k --> number of digits of n
-n --> number to check primality
+K --> number of digits of N
+
+N --> number to check primality
